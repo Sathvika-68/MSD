@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rentals </title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      background: #f4f6f9; /* simple background */
+    }
+
+    header {
+      background: #0d47a1;
+      color: white;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      margin: 0;
+    }
+
+    nav {
+      display: flex;
+      gap: 12px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 15px;
+      padding: 6px 10px;
+      border-radius: 4px;
+      transition: background 0.3s;
+    }
+
+    nav a:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .section {
+      padding: 40px;
+    }
+
+    .section h2 {
+      margin-bottom: 20px;
+      color: #0d47a1;
+    }
+
+    .card-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: transform 0.2s;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      transform: scale(1.03);
+    }
+
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .card h3 {
+      margin: 10px;
+    }
+
+    .card p {
+      margin: 10px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .card button {
+      margin: 10px;
+      padding: 8px 16px;
+      background: #0d47a1;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .card button:hover {
+      background: #1565c0;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      overflow: auto;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: white;
+      margin: 5% auto;
+      padding: 20px;
+      width: 70%;
+      max-width: 800px;
+      border-radius: 12px;
+      position: relative;
+    }
+
+    .modal-content img {
+      width: 100%;
+      max-height: 400px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .thumbnails {
+      display: flex;
+      margin-top: 10px;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .thumbnails img {
+      width: 80px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .thumbnails img:hover {
+      transform: scale(1.1);
+    }
+
+    .close {
+      position: absolute;
+      top: 10px; right: 20px;
+      font-size: 28px;
+      cursor: pointer;
+      color: #333;
+    }
+
+    /* Form Modal */
+    .form-modal {
+      display: none;
+      position: fixed;
+      z-index: 1001;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .form-content {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      width: 400px;
+      max-width: 90%;
+      position: relative;
+    }
+
+    .form-content label {
+      display: block;
+      margin-top: 10px;
+    }
+
+    .form-content input, .form-content select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .form-content button {
+      margin-top: 15px;
+      width: 100%;
+      padding: 10px;
+      background: #0d47a1;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .form-content button:hover {
+      background: #1565c0;
+    }
+
+    .form-close {
+      position: absolute;
+      top: 10px; right: 15px;
+      font-size: 24px;
+      cursor: pointer;
+      color: #333;
+    }
+
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Rentals</h1>
+    <nav>
+      <a href="landing1.html">Home</a>
+      <a href="#rooms">Rooms</a>
+      <a href="#vehicles">Vehicles</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <div class="section" id="rooms">
+  <h2>Rooms</h2>
+  <div class="card-container">
+    
+    <div class="card" onclick="openGallery('room1')">
+      <img src="https://www.ohotelsindia.com/pune/images/afac6de5e93b1d2018cc56a76528cdd2.jpg" alt="Deluxe Room">
+      <h3>Deluxe Room</h3>
+      <p>Comfortable stay with ocean view.</p>
+      <p><b>Cost:</b> ₹3,500 / day</p>
+      <p><b>Capacity:</b> 2 Adults</p>
+      <button onclick="event.stopPropagation();openForm()">Book Now</button>
+    </div>
+
+    <div class="card" onclick="openGallery('room2')">
+      <img src="https://st.hzcdn.com/simgs/pictures/bedrooms/spacious-master-bedroom-with-fireplace-in-sitting-area-michelle-s-interiors-img~6c51de890c5ac8a5_4-9191-1-fbaad59.jpg" alt="Suite">
+      <h3>Suite</h3>
+      <p>Spacious luxury with king bed.</p>
+      <p><b>Cost:</b> ₹5,000 / day</p>
+      <p><b>Capacity:</b> 3 Adults</p>
+      <button onclick="event.stopPropagation();openForm()">Book Now</button>
+    </div>
+
+    <div class="card" onclick="openGallery('room3')">
+      <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/514447938.jpg?k=cf8968c41fd6c709cb7fa6979b5441963cb452ddc2c8ce65cbbd0efc7585b6a0&o=&hp=1" alt="Executive Room">
+      <h3>Executive Room</h3>
+      <p>Perfect for business stays.</p>
+      <p><b>Cost:</b> ₹4,200 / day</p>
+      <p><b>Capacity:</b> 2 Adults + 1 Child</p>
+      <button onclick="event.stopPropagation();openForm()">Book Now</button>
+    </div>
+
+    <div class="card" onclick="openGallery('room4')">
+      <img src="https://d2mo2a5fvrklap.cloudfront.net/app/uploads/sites/11/2025/04/10074447/SANEN-P0020-Ocean-View-King-Balcony-1-scaled-e1744296943620.jpg" alt="Luxury Room">
+      <h3>Luxury Room</h3>
+      <p>Modern design and premium comfort.</p>
+      <p><b>Cost:</b> ₹6,000 / day</p>
+      <p><b>Capacity:</b> 4 Adults</p>
+      <button onclick="event.stopPropagation();openForm()">Book Now</button>
+    </div>
+
+  </div>
+</div>
+
+
+  <div class="section" id="vehicles">
+    <h2>Vehicles</h2>
+    <div class="card-container">
+      <div class="card" onclick="openGallery('car1')">
+        <img src="https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740&q=80" alt="SUV">
+        <h3>SUV</h3>
+        <p>Spacious SUV for family trips.</p>
+        <button onclick="event.stopPropagation();openForm()">Book Now</button>
+      </div>
+      <div class="card" onclick="openGallery('car2')">
+        <img src="https://imgd.aeplcdn.com/600x337/n/cw/ec/1/versions/maruti-suzuki-dzire-lxi1752216345304.jpg?q=80" alt="Sedan">
+        <h3>Sedan</h3>
+        <p>Comfortable ride for city travel.</p>
+        <button onclick="event.stopPropagation();openForm()">Book Now</button>
+      </div>
+      <div class="card" onclick="openGallery('car3')">
+      <img src="https://cdn.jdpower.com/JDPA_2020%20Nissan%20Sentra%20SR%20Orange%20Front%20View.jpg" alt="Compact Car">
+        <h3>Compact Car</h3>
+        <p>Easy to drive, fuel efficient.</p>
+        <button onclick="event.stopPropagation();openForm()">Book Now</button>
+      </div>
+      <div class="card" onclick="openGallery('car4')">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThVnAP6OWOqa7cqauADX9P9EED8VaNdbLpgw&s" alt="MUV">
+        <h3>MUV</h3>
+        <p>Perfect for group travels.</p>
+        <button onclick="event.stopPropagation();openForm()">Book Now</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gallery Modal -->
+  <div id="galleryModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeGallery()">&times;</span>
+      <img id="galleryMainImage" src="" alt="Gallery">
+      <div id="gallerySpecs"></div>
+      <div id="galleryThumbnails" class="thumbnails"></div>
+    </div>
+  </div>
+
+  <!-- Form Modal -->
+  <div id="formModal" class="form-modal">
+    <div class="form-content">
+      <span class="form-close" onclick="closeForm()">&times;</span>
+      <h2>Booking Form</h2>
+      <form>
+        <label>Name:</label>
+        <input type="text" required>
+        <label>Email:</label>
+        <input type="email" required>
+        <label>Phone Number:</label>
+        <input type="tel" required>
+        <label>How many days:</label>
+        <select required>
+          <option value="" disabled selected>Select days</option>
+          <option value="1">1 Day</option>
+          <option value="2">2 Days</option>
+          <option value="3">3 Days</option>
+          <option value="4">4 Days</option>
+          <option value="5">5 Days</option>
+          <option value="6">6 Days</option>
+          <option value="7">7 Days</option>
+          <option value="more">More than 7 Days</option>
+        </select>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const galleries = {
+      room1: {
+        images: [
+          "https://www.ohotelsindia.com/pune/images/afac6de5e93b1d2018cc56a76528cdd2.jpg",
+          "https://loveincorporated.blob.core.windows.net/contentimages/gallery/01c477f4-6d95-4704-8aae-b1341c567b92-grand_hyatt_berlin_hotel_breakfast_germany.jpg",
+          "https://testfile.infinitystays.in/cdn-infinity/2025/03/IMG-20250109-WA0009-1-1024x664.jpg"
+        ],
+        specs: "<p><b>Deluxe Room:</b> Includes ocean view, WiFi, breakfast, and AC.</p>"
+      },
+      room2: {
+        images: [
+          "https://images.trvl-media.com/lodging/1000000/900000/893000/892942/ebd911f4.jpg?impolicy=resizecrop&rw=575&rh=575&ra=fill",
+          "https://media.vrbo.com/lodging/103000000/102060000/102051600/102051537/4a23e2da.jpg?impolicy=resizecrop&rw=575&rh=575&ra=fill"
+        ],
+        specs: "<p><b>Suite:</b> Spacious suite with living area and king bed.</p>"
+      },
+      room3: {
+        images: [
+          "https://casahoteljubileehills.com/wp-content/uploads/2024/12/Casa-Hotel-Jubilee-Hills-14-1024x682.jpg",
+          "https://cache.marriott.com/content/dam/marriott-renditions/BLRRZ/blrrz-club-executive-4829-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=540px:*"
+        ],
+        specs: "<p><b>Executive Room:</b> Designed for business travelers, includes work desk and fast WiFi.</p>"
+      },
+      room4: {
+        images: [
+          "https://media.vrbo.com/lodging/24000000/23090000/23089300/23089221/b1b36476.jpg?impolicy=resizecrop&rw=575&rh=575&ra=fill",
+          "https://cf.bstatic.com/xdata/images/hotel/max1024x768/670832324.jpg?k=7a70e8e2a6f3a4b391fb33bb690b62eba3e74db1d52243a4f5b161e0bff94db8&o=&hp=1"
+        ],
+        specs: "<p><b>Luxury Room:</b> Premium interiors, luxury bedding, and room service.</p>"
+      },
+      car1: {
+        images: [
+          "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740&q=80",
+          "https://quickinsure.s3.ap-south-1.amazonaws.com/uploads/static_page/assets/3e31b78c-4aa3-41d3-bc48-f90b5a0eccb7/hyundai_creta.jpg"
+        ],
+        specs: "<p><b>SUV:</b> High ground clearance, 7-seater, great for long trips.</p>"
+      },
+      car2: {
+        images: [
+          "https://imgd.aeplcdn.com/600x337/n/cw/ec/1/versions/maruti-suzuki-dzire-lxi1752216345304.jpg?q=80",
+          "https://stimg.cardekho.com/images/carexteriorimages/630x420/Maruti/Dzire/11387/1758802554630/front-left-side-47.jpg?imwidth=420&impolicy=resize"
+        ],
+        specs: "<p><b>Sedan:</b> Stylish, fuel efficient, comfortable ride.</p>"
+      },
+      car3: {
+        images: [
+          "https://img.autocarindia.com/model/uploads/modelimages/Hyundai-Grand-i10-Nios-200120231541.jpg?w=700&q=90&c=1",
+          "https://cdn.jdpower.com/JDPA_2020%20Nissan%20Sentra%20SR%20Orange%20Front%20View.jpg"
+        ],
+        specs: "<p><b>Compact Car:</b> Easy to park, economical for city rides.</p>"
+      },
+      car4: {
+        images: [
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXWE9Yb3vBvyFZAvRp3s_Am0KRx9WsuD0XKw&s",
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThVnAP6OWOqa7cqauADX9P9EED8VaNdbLpgw&s"
+        ],
+        specs: "<p><b>MUV:</b> Best choice for family and group travel.</p>"
+      }
+    };
+
+    function openGallery(id) {
+      const gallery = galleries[id];
+      document.getElementById("galleryModal").style.display = "flex";
+      document.getElementById("galleryMainImage").src = gallery.images[0];
+      document.getElementById("gallerySpecs").innerHTML = gallery.specs;
+
+      const thumbsContainer = document.getElementById("galleryThumbnails");
+      thumbsContainer.innerHTML = "";
+      gallery.images.forEach(img => {
+        const thumb = document.createElement("img");
+        thumb.src = img;
+        thumb.onclick = () => {
+          document.getElementById("galleryMainImage").src = img;
+        };
+        thumbsContainer.appendChild(thumb);
+      });
+    }
+
+    function closeGallery() {
+      document.getElementById("galleryModal").style.display = "none";
+    }
+
+    function openForm() {
+      document.getElementById("formModal").style.display = "flex";
+    }
+
+    function closeForm() {
+      document.getElementById("formModal").style.display = "none";
+    }
+  </script>
+</body>
+</html>

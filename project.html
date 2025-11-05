@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login / Signup</title>
+<style>
+    body {
+        background-image: url("https://images.unsplash.com/photo-1561501900-3701fa6a0864?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bHV4dXJ5JTIwaG90ZWx8ZW58MHx8MHx8fDA%3D");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 100vh;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: Arial, sans-serif;
+    }
+    .container {
+        background: rgba(255, 255, 255, 0.9);
+        padding: 40px 55px;
+        border-radius: 12px;
+        width: 400px;
+        box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+    }
+    h2 {
+        text-align: center;
+        margin-bottom: 15px;
+    }
+    input, button, select {
+        width: 100%;
+        padding: 12px;
+        margin-top: 10px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        font-size: 15px;
+    }
+    button {
+        background: #2575fc;
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+    }
+    button:hover {
+        background: #1a5edc;
+    }
+    .links {
+        text-align: center;
+        margin-top: 12px;
+    }
+    .links a {
+        cursor: pointer;
+        color: #2575fc;
+        text-decoration: none;
+    }
+    .message {
+        text-align: center;
+        margin-top: 12px;
+        font-weight: bold;
+    }
+    .success { color: green; }
+    .error { color: red; }
+</style>
+</head>
+<body>
+
+<!-- LOGIN FORM -->
+<div class="container" id="loginForm">
+    <h2>Login</h2>
+    <input type="text" id="loginName" placeholder="Full Name">
+    <input type="password" id="loginPassword" placeholder="Password">
+    <select id="loginRole">
+        <option value="">Select Role</option>
+        <option value="Staff">Staff</option>
+        <option value="Visitor">Visitor</option>
+        <option value="Owner">Owner</option>
+    </select>
+    <button onclick="login()">Login</button>
+    <div class="message" id="loginMsg"></div>
+    <div class="links">
+        <a onclick="switchForm('signupForm')">Sign Up</a> | 
+        <a onclick="switchForm('resetForm')">Forgot Password?</a>
+    </div>
+</div>
+
+<!-- SIGNUP FORM -->
+<div class="container" id="signupForm" style="display:none;">
+    <h2>Sign Up</h2>
+    <input type="text" id="signupName" placeholder="Full Name">
+    <input type="email" id="signupEmail" placeholder="Email">
+    <input type="password" id="signupPassword" placeholder="Password">
+    <select id="signupRole">
+        <option value="">Select Role</option>
+        <option value="Staff">Staff</option>
+        <option value="Visitor">Visitor</option>
+        <option value="Owner">Owner</option>
+    </select>
+    <button onclick="signup()">Sign Up</button>
+    <div class="message" id="signupMsg"></div>
+    <div class="links">
+        <a onclick="switchForm('loginForm')">Already have an account?</a>
+    </div>
+</div>
+
+<!-- RESET FORM -->
+<div class="container" id="resetForm" style="display:none;">
+    <h2>Reset Password</h2>
+    <input type="email" placeholder="Enter your Email">
+    <button>Send Reset Link</button>
+    <div class="links">
+        <a onclick="switchForm('loginForm')">Back to Login</a>
+    </div>
+</div>
+
+<script>
+let savedName = "";
+let savedPassword = "";
+let savedRole = "";
+
+function switchForm(formId) {
+    document.getElementById('loginForm').style.display = 'none';
+    document.getElementById('signupForm').style.display = 'none';
+    document.getElementById('resetForm').style.display = 'none';
+    document.getElementById(formId).style.display = 'block';
+    document.querySelectorAll('.message').forEach(msg => msg.textContent = "");
+}
+
+function signup() {
+    let name = document.getElementById("signupName").value.trim();
+    let email = document.getElementById("signupEmail").value.trim();
+    let password = document.getElementById("signupPassword").value.trim();
+    let role = document.getElementById("signupRole").value;
+    let msg = document.getElementById("signupMsg");
+
+    if (name && email && password && role) {
+        savedName = name;
+        savedPassword = password;
+        savedRole = role;
+        msg.textContent = "Sign up successful as " + role + "!";
+        msg.className = "message success";
+    } else {
+        msg.textContent = "Please fill all fields!";
+        msg.className = "message error";
+    }
+}
+
+function login() {
+    let name = document.getElementById("loginName").value.trim();
+    let password = document.getElementById("loginPassword").value.trim();
+    let role = document.getElementById("loginRole").value;
+    let msg = document.getElementById("loginMsg");
+
+    if (!name || !password || !role) {
+        msg.textContent = "Please enter name, password, and role!";
+        msg.className = "message error";
+        return;
+    }
+
+    if (name === savedName && password === savedPassword && role === savedRole) {
+        msg.textContent = "Login successful as " + role + "!";
+        msg.className = "message success";
+    } else {
+        msg.textContent = "Invalid credentials or role!";
+        msg.className = "message error";
+    }
+}
+</script>
+
+</body>
+</html>
